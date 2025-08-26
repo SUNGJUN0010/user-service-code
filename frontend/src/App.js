@@ -88,15 +88,14 @@ function CognitoSignupPage() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    email: '',
-    name: ''
+    email: ''
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.password || !formData.email || !formData.name) {
+    if (!formData.username || !formData.password || !formData.email) {
       alert('모든 필드를 입력해주세요.');
       return;
     }
@@ -108,8 +107,7 @@ function CognitoSignupPage() {
         password: formData.password,
         options: {
           userAttributes: {
-            email: formData.email,
-            name: formData.name
+            email: formData.email
           },
           // Client Secret이 있는 경우를 위한 설정
           clientMetadata: {
@@ -166,16 +164,6 @@ function CognitoSignupPage() {
             name="email"
             placeholder="이메일"
             value={formData.email}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
-          />
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <input
-            type="text"
-            name="name"
-            placeholder="이름"
-            value={formData.name}
             onChange={handleChange}
             style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
