@@ -9,6 +9,7 @@ import SignUpPage from './pages/SignUpPage';
 import MyPage from './pages/MyPage';
 import FindIdentificationPage from './pages/FindIdentificationPage';
 import FindPasswordPage from './pages/FindPasswordPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 
 // Cognito 로그인 페이지 (기존)
 function CognitoLoginPage({ onLoginSuccess }) {
@@ -396,6 +397,7 @@ function App() {
         />
         <Route path="/findid" element={<FindIdentificationPage />} />
         <Route path="/findpassword" element={<FindPasswordPage />} />
+        <Route path="/change-password" element={<ChangePasswordPage />} />
 
         {/* 기존 Cognito 페이지들 */}
         <Route path="/cognito-login" element={<CognitoLoginPage onLoginSuccess={handleLogin} />} />

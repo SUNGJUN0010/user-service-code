@@ -99,6 +99,16 @@ const MyPage = ({ profileImage, setProfileImage, currentUser, onLogout }) => {
 
   return (
     <div className="mypage-container">
+      {/* 헤더 네비게이션 */}
+      <div className="header-navigation">
+        <button 
+          onClick={() => navigate('/')} 
+          className="home-btn"
+        >
+          🏠 메인페이지로
+        </button>
+      </div>
+      
       <div className="mypage-content">
         {/* 프로필 섹션 */}
         <div className="profile-section">
@@ -173,11 +183,39 @@ const MyPage = ({ profileImage, setProfileImage, currentUser, onLogout }) => {
       <style jsx>{`
         .mypage-container {
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
           min-height: 100vh;
           background-color: #f5f5f5;
           padding: 24px;
+          position: relative;
+        }
+
+        .header-navigation {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          z-index: 10;
+        }
+
+        .home-btn {
+          padding: 10px 16px;
+          background-color: #6366f1;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: 500;
+          transition: background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .home-btn:hover {
+          background-color: #5855eb;
         }
 
         .mypage-content {

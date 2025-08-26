@@ -164,3 +164,15 @@
 2025-08-26 16:50:54,371 WARNING: Continuing without database initialization [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:107]
 2025-08-26 16:50:54,374 INFO: User Service application created successfully [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:194]
 2025-08-26 16:50:54,374 INFO: Starting User Service on 0.0.0.0:8081 [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:204]
+2025-08-26 17:24:52,376 INFO: User Service startup [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:59]
+2025-08-26 17:24:52,389 ERROR: Database initialization failed: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8) [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:105]
+2025-08-26 17:24:52,389 WARNING: Continuing without database initialization [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:107]
+2025-08-26 17:24:52,392 INFO: User Service application created successfully [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:194]
+2025-08-26 17:24:52,393 INFO: Starting User Service on 0.0.0.0:8081 [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:204]
+2025-08-26 17:30:04,436 INFO: User Service startup [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:59]
+2025-08-26 17:30:04,446 ERROR: Database initialization failed: (sqlite3.OperationalError) unable to open database file
+(Background on this error at: https://sqlalche.me/e/20/e3q8) [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:105]
+2025-08-26 17:30:04,447 WARNING: Continuing without database initialization [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:107]
+2025-08-26 17:30:04,450 INFO: User Service application created successfully [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:194]
+2025-08-26 17:30:04,451 INFO: Starting User Service on 0.0.0.0:8081 [in C:\Users\««≈Õ∆“\Desktop\user-service-code\app\app.py:204]
