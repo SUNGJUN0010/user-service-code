@@ -1,0 +1,113 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.user-info {
+  font-weight: 600;
+  color: #334155;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.menu-btn {
+  padding: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4c6ef5;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.menu-btn:hover {
+  background-color: #3b5bdb;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.popup {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.popup-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.popup-buttons {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}

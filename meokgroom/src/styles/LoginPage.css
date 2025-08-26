@@ -1,0 +1,156 @@
+:root {
+  --color-default-bg: #d6dee7;
+  --color-darker-bg: #c6cfd8;
+  --color-dark-navy: #3e4a5b;
+  --color-darker-navy: #353f4d;
+  --color-white: #fafafa;
+  --color-title: #1e293b;
+  --color-subtitle: #485362;
+  --color-text-default: #1e293b;
+  --color-placeholder-grey: #707274d8;
+  --color-placeholder-white: #eff2f5d8;
+}
+
+/* Overall Page Layout */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-default-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 24px;
+}
+
+/* Login Form Container */
+.login-container {
+  background-color: var(--color-white);
+  padding: 80px 120px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header and Logo */
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 32px 24px;
+  position: absolute;
+  top: 0;
+  border-bottom: var(--color-default-bg);
+  background-color: var(--color-default-bg);
+}
+
+.logo {
+  margin-left: 80px;
+  cursor: pointer;
+}
+
+.logo-image {
+  height: 80px;
+}
+
+.login-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-title);
+  margin-bottom: 36px;
+}
+
+
+/* Form Styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.text-form {
+  width: 90%; /* Fixed width relative to parent container */
+  display: flex;
+  align-items: center;
+  background-color: var(--color-darker-bg);
+  border-radius: 9999px;
+  padding: 2px 16px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-white);
+  min-width: 40px; /* Fixed width for label to align inputs */
+}
+
+.form-input {
+  flex-grow: 1; /* Input takes up remaining space */
+  width: 100%;
+  padding: 12px 20px;
+  margin: 2px 12px;
+  border: none;
+  border-radius: 9999px;
+  font-size: 16px;
+  color: #1e293b;
+  background-color: var(--color-darker-bg);
+  transition: background-color 0.2s;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* Inner shadow for depth */
+}
+
+.form-input:focus {
+  outline: none;
+  background-color: var(--color-default-bg);
+}
+
+.form-input::placeholder {
+  color: var(--color-placeholder-white);
+  font-size: 14px;
+}
+
+/* Links and helper text */
+.login-links {
+  display: flex;
+  justify-content: center; /* Centered links based on prototype */
+  gap: 16px;
+  margin: 24px 0px;
+  font-size: 14px;
+}
+
+.login-link {
+  color: var(--color-subtitle);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.login-link:hover {
+  color: var(--color-title);
+}
+
+/* Login Button */
+.login-login-btn {
+  width: 120px;
+  margin-top: 12px;
+  padding: 14px;
+  border: none;
+  border-radius: 9999px;
+  background-color: var(--color-dark-navy);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.login-login-btn:hover {
+  background-color: var(--color-darker-navy);
+  transform: translateY(-2px);
+}

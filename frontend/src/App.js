@@ -2,8 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { signIn, signUp, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 
-// Cognito 로그인 페이지
-function CognitoLoginPage() {
+// Import new components
+import MainBoardPage from './pages/MainBoardPage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import MyPage from './pages/MyPage';
+import FindIdentificationPage from './pages/FindIdentificationPage';
+import FindPasswordPage from './pages/FindPasswordPage';
+
+// Cognito 로그인 페이지 (기존)
+function CognitoLoginPage({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,8 +35,21 @@ function CognitoLoginPage() {
         const accessToken = session.tokens.accessToken.toString();
         localStorage.setItem('authToken', accessToken);
         
+        // 현재 사용자 정보 가져오기
+        const currentUser = await getCurrentUser();
+        const userData = {
+          username: currentUser.username,
+          email: currentUser.signInDetails?.loginId || '',
+          id: currentUser.userId
+        };
+        
+        // 부모 컴포넌트에 로그인 성공 알림
+        if (onLoginSuccess) {
+          onLoginSuccess(userData);
+        }
+        
         alert('로그인 성공!');
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       console.error('로그인 오류:', error);
@@ -83,7 +104,7 @@ function CognitoLoginPage() {
   );
 }
 
-// Cognito 회원가입 페이지
+// Cognito 회원가입 페이지 (기존)
 function CognitoSignupPage() {
   const [formData, setFormData] = useState({
     username: '',
@@ -107,18 +128,19 @@ function CognitoSignupPage() {
         password: formData.password,
         options: {
           userAttributes: {
-            email: formData.email
+            email: formData.email,
           },
-          // Client Secret이 있는 경우를 위한 설정
-          clientMetadata: {
-            // 필요한 경우 여기에 추가 메타데이터
-          }
-        }
+        },
       });
-      
-      console.log('회원가입 성공:', { isSignUpComplete, userId, nextStep });
-      alert('회원가입이 완료되었습니다! 이메일을 확인하여 계정을 활성화해주세요.');
-      navigate('/cognito-login');
+
+      if (isSignUpComplete) {
+        alert('회원가입이 완료되었습니다!');
+        navigate('/cognito-login');
+      } else {
+        console.log('회원가입 다음 단계:', nextStep);
+        alert('회원가입이 완료되었습니다. 이메일을 확인해주세요.');
+        navigate('/cognito-login');
+      }
     } catch (error) {
       console.error('회원가입 오류:', error);
       alert(`회원가입 실패: ${error.message}`);
@@ -127,11 +149,12 @@ function CognitoSignupPage() {
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (
@@ -144,7 +167,7 @@ function CognitoSignupPage() {
             name="username"
             placeholder="사용자명"
             value={formData.username}
-            onChange={handleChange}
+            onChange={handleInputChange}
             style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
@@ -154,7 +177,7 @@ function CognitoSignupPage() {
             name="password"
             placeholder="비밀번호"
             value={formData.password}
-            onChange={handleChange}
+            onChange={handleInputChange}
             style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
@@ -164,7 +187,7 @@ function CognitoSignupPage() {
             name="email"
             placeholder="이메일"
             value={formData.email}
-            onChange={handleChange}
+            onChange={handleInputChange}
             style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px' }}
           />
         </div>
@@ -185,39 +208,32 @@ function CognitoSignupPage() {
         </button>
       </form>
       <div style={{ marginTop: '15px', textAlign: 'center' }}>
-        <Link to="/" style={{ color: '#007bff', textDecoration: 'none' }}>홈으로 돌아가기</Link>
+        <Link to="/cognito-login" style={{ color: '#007bff', textDecoration: 'none' }}>로그인으로 돌아가기</Link>
       </div>
     </div>
   );
 }
 
-// Cognito 대시보드 페이지
-function CognitoDashboardPage() {
-  const [userInfo, setUserInfo] = useState(null);
+// 대시보드 페이지 (기존)
+function DashboardPage() {
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const fetchUser = async () => {
       try {
-        const user = await getCurrentUser();
-        const session = await fetchAuthSession();
-        const attributes = session.tokens.accessToken.payload;
-        setUserInfo({
-          username: user.username,
-          email: attributes.email,
-          name: attributes.name,
-          emailVerified: attributes.email_verified
-        });
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
       } catch (error) {
-        console.error('인증 확인 오류:', error);
+        console.error('사용자 정보 가져오기 실패:', error);
         navigate('/cognito-login');
       } finally {
         setLoading(false);
       }
     };
 
-    checkAuth();
+    fetchUser();
   }, [navigate]);
 
   const handleLogout = async () => {
@@ -231,115 +247,161 @@ function CognitoDashboardPage() {
   };
 
   if (loading) {
-    return <div style={{ padding: '20px', textAlign: 'center' }}>로딩 중...</div>;
+    return <div>로딩 중...</div>;
   }
 
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>🎉 AWS Cognito 환영합니다!</h1>
-      <div style={{ marginTop: '20px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
-        <h2>사용자 정보</h2>
-        <p><strong>사용자명:</strong> {userInfo?.username || 'N/A'}</p>
-        <p><strong>이름:</strong> {userInfo?.name || 'N/A'}</p>
-        <p><strong>이메일:</strong> {userInfo?.email || 'N/A'}</p>
-        <p><strong>이메일 인증:</strong> {userInfo?.emailVerified ? '✅ 인증됨' : '❌ 미인증'}</p>
-      </div>
+      <h1>대시보드</h1>
+      <p>환영합니다, {user?.username}님!</p>
+      <button 
+        onClick={handleLogout}
+        style={{ 
+          padding: '10px 20px', 
+          backgroundColor: '#dc3545', 
+          color: 'white', 
+          border: 'none', 
+          borderRadius: '5px', 
+          cursor: 'pointer' 
+        }}
+      >
+        로그아웃
+      </button>
       <div style={{ marginTop: '20px' }}>
-        <button 
-          onClick={handleLogout}
-          style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
-        >
-          로그아웃
-        </button>
+        <Link to="/" style={{ color: '#007bff', textDecoration: 'none' }}>홈으로 돌아가기</Link>
       </div>
     </div>
   );
 }
 
-// 홈 페이지
-function HomePage() {
-  return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>🚀 AWS Cognito User Service</h1>
-      <p>AWS Cognito를 사용한 사용자 인증 시스템입니다!</p>
-      <div style={{ marginTop: '20px' }}>
-        <h2>현재 상태:</h2>
-        <ul>
-          <li>✅ React 앱 로드됨</li>
-          <li>✅ AWS Cognito 연동됨</li>
-          <li>✅ 라우팅 시스템 활성화</li>
-          <li>✅ Amplify 설정 완료</li>
-        </ul>
-      </div>
-      <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '5px' }}>
-        <p><strong>사용 가능한 기능:</strong></p>
-        <ul>
-          <li>🔐 AWS Cognito 회원가입</li>
-          <li>🔑 AWS Cognito 로그인</li>
-          <li>👤 사용자 정보 조회</li>
-          <li>🚪 안전한 로그아웃</li>
-        </ul>
-      </div>
-      <div style={{ marginTop: '20px' }}>
-        <Link to="/cognito-login" style={{ marginRight: '10px', padding: '10px', backgroundColor: '#007bff', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
-          Cognito 로그인
-        </Link>
-        <Link to="/cognito-signup" style={{ padding: '10px', backgroundColor: '#28a745', color: 'white', textDecoration: 'none', borderRadius: '5px' }}>
-          Cognito 회원가입
-        </Link>
-      </div>
-    </div>
-  );
-}
-
+// 메인 App 컴포넌트
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    // Cognito 인증 상태 확인
+    checkCognitoAuthState();
+  }, []);
+
+  const checkCognitoAuthState = async () => {
+    try {
+      const currentUser = await getCurrentUser();
+      if (currentUser) {
+        setCurrentUser({
+          username: currentUser.username,
+          email: currentUser.signInDetails?.loginId || '',
+          id: currentUser.userId
+        });
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.log('사용자가 로그인되지 않았습니다:', error);
+      setIsLoggedIn(false);
+      setCurrentUser(null);
+    }
+  };
+
+  const fetchCurrentUser = async () => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
       try {
-        await getCurrentUser();
+        // Cognito에서 현재 사용자 정보 가져오기
+        const currentUser = await getCurrentUser();
+        setCurrentUser({
+          username: currentUser.username,
+          email: currentUser.signInDetails?.loginId || '',
+          id: currentUser.userId
+        });
         setIsLoggedIn(true);
       } catch (error) {
-        setIsLoggedIn(false);
+        console.error('사용자 정보 가져오기 실패:', error);
+        handleLogout();
       }
-    };
+    }
+  };
 
-    checkAuth();
-  }, []);
+  const handleLogin = (userData) => {
+    setIsLoggedIn(true);
+    setCurrentUser(userData);
+    alert('성공적으로 로그인 되었습니다!');
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Cognito 로그아웃만 사용
+      await signOut();
+      
+      // 로컬 상태 정리
+      localStorage.removeItem('authToken');
+      setIsLoggedIn(false);
+      setCurrentUser(null);
+      setProfileImage(null);
+      
+      alert('로그아웃 되었습니다.');
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생:', error);
+      // Cognito 로그아웃이 실패해도 로컬 상태는 정리
+      localStorage.removeItem('authToken');
+      setIsLoggedIn(false);
+      setCurrentUser(null);
+      setProfileImage(null);
+      alert('로그아웃 되었습니다.');
+    }
+  };
+
+  const addPost = (newPost) => {
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
+  };
 
   return (
     <Router>
-      <div>
-        <nav style={{ backgroundColor: '#f8f9fa', padding: '10px 20px', borderBottom: '1px solid #ddd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Link to="/" style={{ color: '#007bff', textDecoration: 'none', fontSize: '18px', fontWeight: 'bold' }}>
-            ☁️ AWS Cognito User Service
-          </Link>
-          <div>
-            {isLoggedIn ? (
-              <Link to="/dashboard" style={{ marginRight: '10px', color: '#007bff', textDecoration: 'none' }}>
-                대시보드
-              </Link>
-            ) : (
-              <>
-                <Link to="/cognito-login" style={{ marginRight: '10px', color: '#007bff', textDecoration: 'none' }}>
-                  Cognito 로그인
-                </Link>
-                <Link to="/cognito-signup" style={{ color: '#28a745', textDecoration: 'none' }}>
-                  Cognito 회원가입
-                </Link>
-              </>
-            )}
-          </div>
-        </nav>
+      <Routes>
+        {/* 메인 보드 페이지 (먹구름 스타일) */}
+        <Route
+          path="/"
+          element={
+            <MainBoardPage
+              isLoggedIn={isLoggedIn}
+              onLogout={handleLogout}
+              profileImage={profileImage}
+              posts={posts}
+              setPosts={setPosts}
+              currentUser={currentUser}
+            />
+          }
+        />
         
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/cognito-login" element={<CognitoLoginPage />} />
-          <Route path="/cognito-signup" element={<CognitoSignupPage />} />
-          <Route path="/dashboard" element={<CognitoDashboardPage />} />
-        </Routes>
-      </div>
+        {/* 새로운 페이지들 */}
+        <Route
+          path="/login"
+          element={<LoginPage onLogin={handleLogin} />}
+        />
+        <Route
+          path="/signup"
+          element={<SignUpPage />}
+        />
+        <Route
+          path="/mypage"
+          element={
+            <MyPage
+              profileImage={profileImage}
+              setProfileImage={setProfileImage}
+              currentUser={currentUser}
+              onLogout={handleLogout}
+            />
+          }
+        />
+        <Route path="/findid" element={<FindIdentificationPage />} />
+        <Route path="/findpassword" element={<FindPasswordPage />} />
+
+        {/* 기존 Cognito 페이지들 */}
+        <Route path="/cognito-login" element={<CognitoLoginPage onLoginSuccess={handleLogin} />} />
+        <Route path="/cognito-signup" element={<CognitoSignupPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+      </Routes>
     </Router>
   );
 }

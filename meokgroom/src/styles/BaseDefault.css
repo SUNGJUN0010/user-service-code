@@ -1,0 +1,21 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Optional: Prevents scrollbars if content overflows */
+}
+
+:root {
+  --color-default-bg: #d6dee7;
+  --color-darker-bg: #c8cfd6;
+  --color-dark-navy: #3e4a5b;
+  --color-darker-navy: #353f4d;
+  --color-white: #fafafa;
+  --color-white-shadow: #ececec;
+  --color-title: #1e293b;
+  --color-subtitle: #485362;
+  --color-text-default: #1e293b;
+  --color-placeholder-grey: #707274d8;
+  --color-placeholder-white: #eff2f5d8;
+}

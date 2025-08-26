@@ -1,0 +1,135 @@
+:root {
+  --color-default-bg: #d6dee7;
+  --color-darker-bg: #c8cfd6;
+  --color-dark-navy: #3e4a5b;
+  --color-darker-navy: #353f4d;
+  --color-white: #fafafa;
+  --color-white-shadow: #ececec;
+  --color-title: #1e293b;
+  --color-subtitle: #485362;
+  --color-text-default: #1e293b;
+  --color-placeholder-grey: #707274d8;
+  --color-placeholder-white: #eff2f5d8;
+}
+
+/* Main container for the entire page, centers the content */
+.findid-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-default-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 24px;
+}
+
+/* Header styling (if needed) */
+/*
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 32px 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-default-bg);
+}
+
+.logo {
+  margin-left: 80px;
+  cursor: pointer;
+}
+
+.logo-image {
+  height: 80px;
+}
+*/
+
+/* Container for the form itself, with card-like appearance */
+.findid-container {
+  background-color: var(--color-dark-navy);
+  padding: 80px 120px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Page title styling */
+.findid-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: 36px;
+}
+
+/* Styling for the form's input fields */
+.findid-form-group {
+    width: 90%; /* Fixed width relative to parent container */
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-white);
+    border-radius: 9999px;
+    padding: 2px 16px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.findid-form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-subtitle);
+    min-width: 40px;
+}
+
+/* The input field itself, with the "Email" placeholder and rounded corners */
+.findid-form-group input {
+    flex-grow: 1; /* Input takes up remaining space */
+    width: 100%;
+    padding: 12px 20px;
+    margin: 2px 12px;
+    border: none;
+    border-radius: 9999px;
+    font-size: 16px;
+    color: var(--color-text-default);
+    background-color: var(--color-white-shadow);
+    transition: background-color 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.findid-form-group input:focus {
+    background-color: var(--color-white);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    outline: none;
+}
+
+.findid-form-group input::placeholder {
+    color: var(--color-placeholder-grey);
+    font-size: 14px;
+}
+
+/* Styling for the "완료" (Complete) button */
+.findid-complete-btn {
+    width: 120px;
+    margin-top: 24px;
+    padding: 1rem;
+    background-color: var(--color-white); 
+    color: var(--color-dark-navy);
+    font-size: 1.125rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.findid-complete-btn:hover {
+    background-color: var(--color-white-shadow);
+    transform: translateY(-2px);
+}

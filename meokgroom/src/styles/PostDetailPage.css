@@ -1,0 +1,241 @@
+.post-detail-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px;
+  background-color: #d6dee7; /* Matches the main board background */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.post-detail-container {
+  background-color: #fffffffa;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Back Button */
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #556375;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-bottom: 24px;
+}
+
+.back-button:hover {
+  color: #1e293b;
+}
+
+/* Post Header */
+.post-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.post-detail-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.post-detail-author-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-detail-author-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+}
+
+.post-detail-author-name {
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Post Content */
+.post-detail-content {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin-bottom: 24px;
+}
+
+.post-detail-image-container {
+  margin-bottom: 24px;
+}
+
+.post-detail-image {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Post Stats & Actions */
+.post-detail-stats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
+.post-detail-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.post-detail-stat-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+.post-detail-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.post-detail-action-btn {
+  background: none;
+  border: none;
+  color: #556375;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.post-detail-action-btn:hover {
+  color: #1e293b;
+}
+
+.post-detail-delete-btn {
+  color: #ef4444;
+}
+
+.post-detail-delete-btn:hover {
+  color: #dc2626;
+}
+
+/* Comments Section */
+.comments-section {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 24px;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-content-wrapper {
+  flex-grow: 1;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.add-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comment-input-area {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  font-size: 14px;
+  resize: vertical;
+  color: #1e293b;
+}
+
+.comment-submit-btn {
+  align-self: flex-end;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  background-color: #535e8a;
+  color: #f1f1f1;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.comment-submit-btn:hover {
+  background-color: #434d70;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .post-detail-container {
+    padding: 24px;
+    margin: 16px;
+  }
+
+  .post-detail-title {
+    font-size: 22px;
+  }
+
+  .post-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .post-detail-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
